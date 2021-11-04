@@ -1,5 +1,4 @@
 import './App.css';
-import './App.css';
 import axios from 'axios';
 import { useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce/lib';
