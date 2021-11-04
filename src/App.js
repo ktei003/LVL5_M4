@@ -1,25 +1,41 @@
-import logo from './logo.svg';
 import './App.css';
+import './App.css';
+import axios from 'axios';
+import { useState } from 'react';
+import { useDebouncedCallback } from 'use-debounce/lib';
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [autocomplete, setAutocomplete] = useState([]);
+	const debounced = useDebouncedCallback((value) => {
+		console.log(value)
+		getAutocomplete(value)
+	}, 750)
+
+	const getAutocomplete = (text) => {
+		console.log(text)
+		if (text) {
+			axios.get('http://localhost:4000/autocomplete', { params: { prefix: text } })
+				.then(res => setAutocomplete(res.data.completions))
+				.catch(() => console.log("There was a catch error"))
+		} else {
+			setAutocomplete([]);
+		}
+	}
+
+	return (
+		<div className="App">
+			<h1>Turners FAQ Search</h1>
+			<input type="text" onChange={(e) => debounced(e.target.value)} />
+			<div>
+				{
+					autocomplete.map((item) => (
+						<div>{item}</div>
+					))
+				}
+			</div>
+		</div>
+	);
 }
 
 export default App;
