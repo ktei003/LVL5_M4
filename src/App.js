@@ -7,13 +7,9 @@ import { useDebouncedCallback } from 'use-debounce/lib';
 
 function App() {
 	const [autocomplete, setAutocomplete] = useState([]);
-	const debounced = useDebouncedCallback((value) => {
-		console.log(value)
-		getAutocomplete(value)
-	}, 750)
+	const debounced = useDebouncedCallback(value => getAutocomplete(value), 750)
 
 	const getAutocomplete = (text) => {
-		console.log(text)
 		if (text) {
 			axios.get('http://localhost:4000/autocomplete', { params: { prefix: text } })
 				.then(res => setAutocomplete(res.data.completions))
