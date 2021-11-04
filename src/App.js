@@ -2,6 +2,7 @@ import './App.css';
 import axios from 'axios';
 import { useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce/lib';
+import { ReactComponent as SearchSVG } from './assets/search.svg'
 
 
 function App() {
@@ -19,6 +20,16 @@ function App() {
 		} else {
 			setAutocomplete([]);
 		}
+		console.log(autocomplete)
+	}
+
+	const handleEnter = (e) => {
+		console.log(e)
+		if (e.charCode === 13) handleSearch();
+	}
+
+	const handleSearch = () => {
+		getSearch(searchTerm)
 	}
 
 	const getSearch = (search) => {
@@ -27,6 +38,7 @@ function App() {
 				.then(res => {
 					setSearchResults(res.data.results)
 					console.log(res.data.results)
+					setAutocomplete([])
 				})
 				.catch(() => console.log("There was a catch error"))
 		} else {
@@ -38,19 +50,35 @@ function App() {
 	return (
 		<div className="App">
 			<h1>Turners FAQ Search</h1>
-			<input type="text" onChange={(e) => {
-				setSearchTerm(e.target.value)
-				debounced(e.target.value)
-			}}
-			/>
-			<div>
-				{
-					autocomplete.map((item) => (
-						<div>{item}</div>
-					))
-				}
+				
+			<div className="searchContainer">
+				<div className="searchContainer__searchWrapper">
+					<SearchSVG height="50px" width="50px" className="searchIcon"/>
+				<input
+					type="text"
+					value={searchTerm}
+					onChange={(e) => {
+						setSearchTerm(e.target.value)
+						debounced(e.target.value)
+					}}
+					onKeyPress={handleEnter}
+				/>
+				<div>G</div>
+				</div>
+				<div className={`searchContainer__autocomplete ${searchTerm || "hidden"}`}>
+					{
+						autocomplete.map((item) => (
+							<div className='searchContainer__autocomplete__item' onClick={() => {
+								setSearchTerm(item)
+								setAutocomplete([])
+								console.log(item)
+							}}>{item}</div>
+						))
+					}
+				</div>
+
 			</div>
-			<button onClick={() => getSearch(searchTerm)}>Go</button>
+			<button onClick={handleSearch}>Go</button>
 			<div>
 				<h2>Search results</h2>
 				<div className={'searchResultContainer'}>

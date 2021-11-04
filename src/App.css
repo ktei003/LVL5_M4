@@ -2,10 +2,21 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  /* border: 1px red solid !important; */
+}
+
+/* A conventient class to make something hidden - useof !important is to always ensure it takes priority over other styles that may have a higher level of specificity */
+.hidden {
+  display: none !important;
 }
 
 .App {
   text-align: center;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
 }
 
 .App-header {
@@ -13,10 +24,46 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.searchContainer {
+  background-color: white;
+  width: 40%;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  border-radius: 1em;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  text-align: left;
+}
+
+.searchContainer__searchWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.searchContainer__searchWrapper input {
+  color: rgb(31, 71, 174);
+  border: none;
+  outline: none;
+  padding: 0.5em;
+  font-size: 2rem;
+  caret-color: rgb(31, 71, 174);
+  flex-basis: 100%;
+}
+
+.searchContainer__autocomplete {
+  display: flex;
+  flex-direction: column;
+}
+
+.searchContainer__autocomplete__item {
+  font-size: 1.2rem;
+  padding: 0.2em;
 }
 
 .searchResultContainer {
@@ -42,4 +89,8 @@
 }
 
 .searchResultItem__text {
+}
+
+.searchIcon {
+  width: 50
 }
