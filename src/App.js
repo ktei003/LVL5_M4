@@ -50,35 +50,35 @@ function App() {
 	return (
 		<div className="App">
 			<h1>Turners FAQ Search</h1>
-				
+
 			<div className="searchContainer">
 				<div className="searchContainer__searchWrapper">
-					<SearchSVG height="50px" width="50px" className="searchIcon"/>
-				<input
-					type="text"
-					value={searchTerm}
-					onChange={(e) => {
-						setSearchTerm(e.target.value)
-						debounced(e.target.value)
-					}}
-					onKeyPress={handleEnter}
-				/>
-				<div>G</div>
+					<SearchSVG className="searchIcon" />
+					<input
+						type="text"
+						value={searchTerm}
+						onChange={(e) => {
+							setSearchTerm(e.target.value)
+							debounced(e.target.value)
+						}}
+						onKeyPress={handleEnter}
+					/>
 				</div>
 				<div className={`searchContainer__autocomplete ${searchTerm || "hidden"}`}>
 					{
 						autocomplete.map((item) => (
-							<div className='searchContainer__autocomplete__item' onClick={() => {
-								setSearchTerm(item)
-								setAutocomplete([])
-								console.log(item)
-							}}>{item}</div>
+							<div className='searchContainer__autocomplete__item'
+								onClick={() => {
+									setSearchTerm(item)
+									setAutocomplete([])
+								}}>
+								{item}
+							</div>
 						))
 					}
 				</div>
-
 			</div>
-			<button onClick={handleSearch}>Go</button>
+			{/* <button onClick={handleSearch}>Go</button> */}
 			<div>
 				<h2>Search results</h2>
 				<div className={'searchResultContainer'}>

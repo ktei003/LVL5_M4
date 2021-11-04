@@ -46,6 +46,12 @@
   align-items: center;
 }
 
+.searchIcon {
+  width: 40px;
+  height: 40px;
+  color:#999;
+}
+
 .searchContainer__searchWrapper input {
   color: rgb(31, 71, 174);
   border: none;
@@ -89,8 +95,5 @@
 }
 
 .searchResultItem__text {
-}
-
-.searchIcon {
-  width: 50
+  
 }
