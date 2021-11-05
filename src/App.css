@@ -1,8 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Secular+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  font-family: 'Lato', sans-serif;
   /* border: 1px red solid !important; */
+}
+
+:root {
+  --turner-blue: rgb(0, 118, 190);
+  --turner-red: rgb(183, 18, 52); 
 }
 
 /* A conventient class to make something hidden - useof !important is to always ensure it takes priority over other styles that may have a higher level of specificity */
@@ -12,20 +21,19 @@
 
 .App {
   text-align: center;
-  background-color: #f9f9f9;
+  background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: start;
   height: 100vh;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.title {
+  margin-top: 1em;
+  font-family: 'Secular One';
+  font-size: 2.5rem;
+  color: var(--turner-blue);
 }
 
 .searchContainer {
@@ -36,7 +44,7 @@
   flex-direction: column;
   gap: 1em;
   border-radius: 1em;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   text-align: left;
 }
 
@@ -47,19 +55,20 @@
 }
 
 .searchIcon {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   color:#999;
 }
 
 .searchContainer__searchWrapper input {
-  color: rgb(31, 71, 174);
+  color: var(--turner-blue);
   border: none;
   outline: none;
-  padding: 0.5em;
-  font-size: 2rem;
-  caret-color: rgb(31, 71, 174);
+  padding: 0.25em;
+  font-size: 1.5rem;
+  caret-color: var(--turner-blue);
   flex-basis: 100%;
+  font-weight: 600;
 }
 
 .searchContainer__autocomplete {
@@ -69,31 +78,102 @@
 
 .searchContainer__autocomplete__item {
   font-size: 1.2rem;
-  padding: 0.2em;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  border-radius: 0.5em;
+  /* background-color: red; */
 }
+  .searchContainer__autocomplete__item:hover {
+    /* color: white; */
+    background-color: #ddd;
+    transition: all 0.2s;
+  }
+
 
 .searchResultContainer {
   display: flex;
   flex-direction: column;
   gap: 2em;
+  overflow: scroll;
   align-items: center;
+  height: 100%;
+  /* border: 1px solid green; */
+  /* padding: 100px 0; */
+}
+
+.searchResultContainer::-webkit-scrollbar {
+  display: none;
 }
 
 .searchResultItem {
   display: flex;
-  background-color: aliceblue;
-  width: 500px;
+  background-color: white;
+  width: 40%;
   padding: 2em;
   flex-direction: column;
   border-radius: 2em;
   text-align: left;
+  /* border: #ccc 1px solid; */
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  transition: all 0.2s;
+}
 
+.searchResultContainer :nth-child(2).searchResultItem {
+  margin-top: 51px;
+  /* background-color: green !important; */
+}
+
+.searchResultItem:hover {
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;;
+  /* background-color: var(--turner-blue); */
+  cursor: pointer;
+  transform: scale(1.02);
+  /* color: white; */
 }
 
 .searchResultItem h3 {
-  color: blue;
+  margin: 0.5em 0;
+  color: var(--turner-red);
 }
 
-.searchResultItem__text {
-  
+.searchResultItem h3::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2px;
+  margin: 0.5em 0;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.searchResultItem__link {
+  color: var(--turner-blue);
+}
+
+.upper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content:flex-start;
+  align-items: center;
+  gap: 1em;
+  height: 500px;
+  border-bottom: 1px solid #999;
+  /* border: 1px solid blue; */
+}
+
+.lower {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  /* border: 1px solid red; */
+}
+
+.gradient {
+  position: fixed;
+  z-index: 99;
+  background-color: red;
+  height: 50px;
+  width: 100%;
+  background: rgb(255,255,255);
+  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.5) 60%, rgba(255,255,255,0) 100%);
 }
