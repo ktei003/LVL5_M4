@@ -53,7 +53,7 @@ function App() {
 
 	const getSearch = (search) => {
 		if (search) {
-			axios.get('http://localhost:4000/search', { params: { search: search } })
+			axios.get('http://localhost:4000/search', { params: { search: search, collection: currentCollection } })
 				.then(res => {
 					setSearchResults(res.data.results)
 					console.log(res.data.results)
@@ -69,6 +69,10 @@ function App() {
 	const openInNewTab = (url) => {
 		const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
 		if (newWindow) newWindow.opener = null
+	}
+
+	const getLimitedText = (text, limit) => {
+		return text.length > limit ? text.slice(0, limit - 3) + "..." : text
 	}
 
 	// PAGE RENDER
@@ -130,7 +134,7 @@ function App() {
 						searchResults.map((item) => (
 							<div className='searchResultItem' onClick={() => openInNewTab(item.metadata.source.url)}>
 								<h3>{item.title[0].length > 150 ? item.title[0].slice(0, 147) + "..." : item.title}</h3>
-								<div className='searchResultItem__text'><p>{item.text[0]}</p><br /><p className="searchResultItem__link">Source: {item.metadata.source.url}</p></div>
+								<div className='searchResultItem__text'><p>{getLimitedText(item.text[0], 1000)}</p><br /><p className="searchResultItem__link">Source: {item.metadata.source.url}</p></div>
 							</div>
 						))
 					}
