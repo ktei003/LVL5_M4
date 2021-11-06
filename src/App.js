@@ -14,13 +14,16 @@ function App() {
 	const [collectionList, setCollectionList] = useState([]);
 	const [currentCollection, setCurrentCollection] = useState({});
 
+	// COLLECTION SETUP
 	const getCollections = () => {
 		axios.get(endpoint + 'collections')
 			.then(res => setCollectionList(res.data))
 			.catch(() => console.log("There was a catch eror"));
 	}
 
+	// Runs the function to set up the collection list on page load
 	useEffect(() => getCollections(), [])
+	// When the collection list is set, the first item in the collection is set to be the default 'current collection'. This works because the only time the collection list is set is on page load.
 	useEffect(() => setCurrentCollection(collectionList[0]),[collectionList])
 
 	const getAutocomplete = (text) => {
@@ -33,6 +36,7 @@ function App() {
 		}
 	}
 
+	// SEARCH HANDLERS
 	const handleEnter = (e) => {
 		if (e.charCode === 13) handleSearch();
 		setAutocomplete([])
@@ -62,13 +66,21 @@ function App() {
 		if (newWindow) newWindow.opener = null
 	}
 
+	// PAGE RENDER
 	return (
 		<div className="App">
 			<div className="upper">
+				{/* TITLE */}
 				<div className='title'>Search Turners</div>
+
+				{/* SEARCH BOX */}
 				<div className='searchContainer'>
 					<div className='searchContainer__searchWrapper'>
+						
+						{/* SEARCH ICON */}
 						<SearchSVG className='searchIcon' />
+						
+						{/* SEARCH FIELD */}
 						<input
 							type="text"
 							value={searchTerm}
@@ -79,6 +91,8 @@ function App() {
 							onKeyPress={handleEnter}
 						/>
 					</div>
+					
+					{/* AUTOCOMPLETE LIST */}
 					<div className={`searchContainer__autocomplete ${(autocomplete[0]) || "hidden"}`}>
 						{
 							autocomplete.map((item) => (
@@ -96,11 +110,10 @@ function App() {
 
 			</div>
 			<div className='lower'>
-				{/* <h2>Search results</h2> */}
 				<div className='searchResultContainer'>
-					<div className="gradient">
-
-					</div>
+					<div className="gradient"></div>
+					
+					{/* SEARCH RESULTS */}
 					{
 						searchResults.map((item) => (
 							<div className='searchResultItem' onClick={() => openInNewTab(item.metadata.source.url)}>
