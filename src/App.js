@@ -1,26 +1,34 @@
 import './App.css';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDebouncedCallback } from 'use-debounce/lib';
-import { ReactComponent as SearchSVG } from './assets/search.svg'
+import { ReactComponent as SearchSVG } from './assets/search.svg';
 
 
 function App() {
+	const endpoint = "http://localhost:4000/";
 	const [autocomplete, setAutocomplete] = useState([]);
-	const debounced = useDebouncedCallback(value => getAutocomplete(value), 750)
-	const [searchTerm, setSearchTerm] = useState()
+	const debounced = useDebouncedCallback(value => getAutocomplete(value), 750);
+	const [searchTerm, setSearchTerm] = useState();
 	const [searchResults, setSearchResults] = useState([]);
+	const [collectionList, setCollectionList] = useState([]);
 
+	const getCollections = () => {
+		axios.get(endpoint + 'collections')
+			.then(res => setCollectionList(res.data))
+			.catch(() => console.log("There was a catch eror"));
+	}
+
+	useEffect(() => getCollections(), [])
 
 	const getAutocomplete = (text) => {
 		if (text) {
 			axios.get('http://localhost:4000/autocomplete', { params: { prefix: text } })
 				.then(res => setAutocomplete(res.data.completions))
-				.catch(() => console.log("There was a catch error"))
+				.catch(() => console.log("There was a catch error"));
 		} else {
 			setAutocomplete([]);
 		}
-		console.log(autocomplete)
 	}
 
 	const handleEnter = (e) => {
@@ -95,7 +103,7 @@ function App() {
 						searchResults.map((item) => (
 							<div className='searchResultItem' onClick={() => openInNewTab(item.metadata.source.url)}>
 								<h3>{item.title[0].length > 150 ? item.title[0].slice(0, 147) + "..." : item.title}</h3>
-								<div className='searchResultItem__text'><p>{item.text[0]}</p><br/><p className="searchResultItem__link">Source: {item.metadata.source.url}</p></div>
+								<div className='searchResultItem__text'><p>{item.text[0]}</p><br /><p className="searchResultItem__link">Source: {item.metadata.source.url}</p></div>
 							</div>
 						))
 					}
