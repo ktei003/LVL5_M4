@@ -1,7 +1,33 @@
 const cleanText = require('../functions/cleanText')
 
-test('Correctly cleans a string', () => {
-	expect(
-		cleanText("Hello$World")
-		).toBe("Hello World")
+const testArray = [
+	"hello world",
+	"hello%world",
+	"!hello world",
+	";hello?world!",
+	"hello;world",
+	"hello world?"
+]
+
+testArray.forEach(text => {
+	test('Correctly cleans a string', () => {
+		expect(cleanText(text)).toBe("hello world")
+	})
 })
+
+// test('Correctly cleans a string', () => {
+// 	const testArray = [
+// 		"hello world",
+// 		"hello%world",
+// 		"!hello world",
+// 		";hello?world!",
+// 		"hello;world",
+// 		"hello world?"
+// 	]
+
+// 	testArray.forEach((test) => {
+// 		expect(cleanText(test)).toBe("hello world")
+// 	})
+
+
+// })
