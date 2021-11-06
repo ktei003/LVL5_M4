@@ -14,6 +14,9 @@ function App() {
 	const [collectionList, setCollectionList] = useState([]);
 	const [currentCollection, setCurrentCollection] = useState();
 
+	// TEXT PRE-PROCESSING
+	const cleanText = (text) => text.replace(/[^a-zA-Z0-9 ]/g, "");
+
 	// COLLECTION SETUP
 	const getCollections = () => {
 		axios.get(endpoint + 'collections')
@@ -33,7 +36,7 @@ function App() {
 
 	const getAutocomplete = (text) => {
 		if (text) {
-			axios.get('http://localhost:4000/autocomplete', { params: { prefix: text, collection: currentCollection } })
+			axios.get('http://localhost:4000/autocomplete', { params: { prefix: cleanText(text), collection: currentCollection } })
 				.then(res => setAutocomplete(res.data.completions))
 				.catch(() => console.log("There was a catch error"));
 		} else {
@@ -42,8 +45,6 @@ function App() {
 	}
 
 	// SEARCH HANDLERS
-	const cleanText = (text) => text.replace(/[^a-zA-Z0-9 ]/g, "");
-
 	const handleEnter = (e) => {
 		if (e.charCode === 13) handleSearch();
 		setAutocomplete([])
@@ -55,7 +56,7 @@ function App() {
 
 	const getSearch = (search) => {
 		if (search) {
-			axios.get('http://localhost:4000/search', { params: { search: search, collection: currentCollection } })
+			axios.get('http://localhost:4000/search', { params: { search: cleanText(search), collection: currentCollection } })
 				.then(res => {
 					setSearchResults(res.data.results)
 					console.log(res.data.results)
@@ -87,10 +88,10 @@ function App() {
 				{/* SEARCH BOX */}
 				<div className='searchContainer'>
 					<div className='searchContainer__searchWrapper'>
-						
+
 						{/* SEARCH ICON */}
 						<SearchSVG className='searchIcon' />
-						
+
 						{/* SEARCH FIELD */}
 						<input
 							type="text"
@@ -109,7 +110,7 @@ function App() {
 							}
 						</select>
 					</div>
-					
+
 					{/* AUTOCOMPLETE LIST */}
 					<div className={`searchContainer__autocomplete ${(autocomplete[0]) || "hidden"}`}>
 						{
@@ -130,7 +131,7 @@ function App() {
 			<div className='lower'>
 				<div className='searchResultContainer'>
 					<div className="gradient"></div>
-					
+
 					{/* SEARCH RESULTS */}
 					{
 						searchResults.map((item) => (
