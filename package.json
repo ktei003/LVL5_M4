@@ -19,6 +19,7 @@
     "test": "jest --coverage",
     "eject": "react-scripts eject"
   },
+  "heroku-run-build-script": true,
   "eslintConfig": {
     "extends": [
       "react-app",
