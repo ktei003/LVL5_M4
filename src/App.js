@@ -12,19 +12,24 @@ function App() {
 	const [searchTerm, setSearchTerm] = useState();
 	const [searchResults, setSearchResults] = useState([]);
 	const [collectionList, setCollectionList] = useState([]);
-	const [currentCollection, setCurrentCollection] = useState({});
+	const [currentCollection, setCurrentCollection] = useState();
 
 	// COLLECTION SETUP
 	const getCollections = () => {
 		axios.get(endpoint + 'collections')
-			.then(res => setCollectionList(res.data))
-			.catch(() => console.log("There was a catch eror"));
+			.then(res => {
+				setCollectionList(res.data)
+				setCurrentCollection(res.data[0].collection_id)
+				// setCurrentCollection(collectionList[0].collection_id)
+				// console.log("got this far")
+			})
+			.catch(() => console.log("There was a catch error"));
 	}
 
 	// Runs the function to set up the collection list on page load
 	useEffect(() => getCollections(), [])
 	// When the collection list is set, the first item in the collection is set to be the default 'current collection'. This works because the only time the collection list is set is on page load.
-	useEffect(() => setCurrentCollection(collectionList[0]),[collectionList])
+	// useEffect(() => setCurrentCollection(collectionList[0].collection_id),[collectionList])
 
 	const getAutocomplete = (text) => {
 		if (text) {
@@ -90,10 +95,12 @@ function App() {
 							}}
 							onKeyPress={handleEnter}
 						/>
-						<select name="collection" id="collection">
-							<option value="a">FAQ</option>
-							<option value="b">Buying a car</option>
-							<option value="c">c</option>
+						<select name="collection" id="collection" value={currentCollection} onChange={(e) => setCurrentCollection(e.target.value)}>
+							{
+								collectionList.map((item) => (
+									<option value={item.collection_id}>{item.name}</option>
+								))
+							}
 						</select>
 					</div>
 					
