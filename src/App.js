@@ -12,6 +12,7 @@ function App() {
 	const [searchTerm, setSearchTerm] = useState();
 	const [searchResults, setSearchResults] = useState([]);
 	const [collectionList, setCollectionList] = useState([]);
+	const [currentCollection, setCurrentCollection] = useState({});
 
 	const getCollections = () => {
 		axios.get(endpoint + 'collections')
@@ -20,6 +21,7 @@ function App() {
 	}
 
 	useEffect(() => getCollections(), [])
+	useEffect(() => setCurrentCollection(collectionList[0]),[collectionList])
 
 	const getAutocomplete = (text) => {
 		if (text) {
