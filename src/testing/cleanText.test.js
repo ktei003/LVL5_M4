@@ -14,20 +14,3 @@ testArray.forEach(text => {
 		expect(cleanText(text)).toBe("hello world")
 	})
 })
-
-// test('Correctly cleans a string', () => {
-// 	const testArray = [
-// 		"hello world",
-// 		"hello%world",
-// 		"!hello world",
-// 		";hello?world!",
-// 		"hello;world",
-// 		"hello world?"
-// 	]
-
-// 	testArray.forEach((test) => {
-// 		expect(cleanText(test)).toBe("hello world")
-// 	})
-
-
-// })
