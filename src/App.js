@@ -7,18 +7,18 @@ import cleanText from './functions/cleanText';
 
 
 function App() {
-	const endpoint = "http://localhost:4000/";
+	//ENVIRONMENT SETUP (DISTINGUISHES BETWEEN DEVELOPMENT AND PRODUCTION)
+	const localURL = "http://localhost:4000/"
+	const remoteURL = "https://turners-search-backend.herokuapp.com/"
+	const endpoint = process.env.NODE_ENV === "development" ? localURL : remoteURL
+
+	// REACT STATES
 	const [autocomplete, setAutocomplete] = useState([]);
 	const debounced = useDebouncedCallback(value => getAutocomplete(value), 750);
 	const [searchTerm, setSearchTerm] = useState();
 	const [searchResults, setSearchResults] = useState([]);
 	const [collectionList, setCollectionList] = useState([]);
 	const [currentCollection, setCurrentCollection] = useState();
-	
-	// TEXT PRE-PROCESSING
-	// const cleanText = (text) => text.replace(/[^a-zA-Z0-9 ]/g, "");
-	
-	// module.exports = cleanText
 	
 	// COLLECTION SETUP
 	const getCollections = () => {
@@ -35,7 +35,7 @@ function App() {
 
 	const getAutocomplete = (text) => {
 		if (text) {
-			axios.get('http://localhost:4000/autocomplete', {
+			axios.get(endpoint + 'autocomplete', {
 				params: {
 					prefix: cleanText(text),
 					collection: currentCollection
@@ -60,7 +60,7 @@ function App() {
 	
 	const getSearch = (search) => {
 		if (search) {
-			axios.get('http://localhost:4000/search', { params: { search: cleanText(search), collection: currentCollection } })
+			axios.get(endpoint + 'search', { params: { search: cleanText(search), collection: currentCollection } })
 			.then(res => {
 				setSearchResults(res.data.results)
 				console.log(res.data.results)
