@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useDebouncedCallback } from 'use-debounce/lib';
 import { ReactComponent as SearchSVG } from './assets/search.svg';
+import cleanText from './functions/cleanText';
 
 
 function App() {
@@ -13,30 +14,33 @@ function App() {
 	const [searchResults, setSearchResults] = useState([]);
 	const [collectionList, setCollectionList] = useState([]);
 	const [currentCollection, setCurrentCollection] = useState();
-
+	
 	// TEXT PRE-PROCESSING
-	const cleanText = (text) => text.replace(/[^a-zA-Z0-9 ]/g, "");
-
+	// const cleanText = (text) => text.replace(/[^a-zA-Z0-9 ]/g, "");
+	
+	// module.exports = cleanText
+	
 	// COLLECTION SETUP
 	const getCollections = () => {
 		axios.get(endpoint + 'collections')
 			.then(res => {
 				setCollectionList(res.data)
 				setCurrentCollection(res.data[0].collection_id)
-				// setCurrentCollection(collectionList[0].collection_id)
-				// console.log("got this far")
 			})
 			.catch(() => console.log("There was a catch error"));
 	}
 
 	// Runs the function to set up the collection list on page load
 	useEffect(() => getCollections(), [])
-	// When the collection list is set, the first item in the collection is set to be the default 'current collection'. This works because the only time the collection list is set is on page load.
-	// useEffect(() => setCurrentCollection(collectionList[0].collection_id),[collectionList])
 
 	const getAutocomplete = (text) => {
 		if (text) {
-			axios.get('http://localhost:4000/autocomplete', { params: { prefix: cleanText(text), collection: currentCollection } })
+			axios.get('http://localhost:4000/autocomplete', {
+				params: {
+					prefix: cleanText(text),
+					collection: currentCollection
+				}
+			})
 				.then(res => setAutocomplete(res.data.completions))
 				.catch(() => console.log("There was a catch error"));
 		} else {
@@ -53,16 +57,16 @@ function App() {
 	const handleSearch = () => {
 		getSearch(searchTerm)
 	}
-
+	
 	const getSearch = (search) => {
 		if (search) {
 			axios.get('http://localhost:4000/search', { params: { search: cleanText(search), collection: currentCollection } })
-				.then(res => {
-					setSearchResults(res.data.results)
-					console.log(res.data.results)
-					setAutocomplete([])
-				})
-				.catch(() => console.log("There was a catch error"))
+			.then(res => {
+				setSearchResults(res.data.results)
+				console.log(res.data.results)
+				setAutocomplete([])
+			})
+			.catch(() => console.log("There was a catch error"))
 		} else {
 			console.log("text returned false")
 			setSearchResults({})
