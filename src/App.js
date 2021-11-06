@@ -90,6 +90,11 @@ function App() {
 							}}
 							onKeyPress={handleEnter}
 						/>
+						<select name="collection" id="collection">
+							<option value="a">FAQ</option>
+							<option value="b">Buying a car</option>
+							<option value="c">c</option>
+						</select>
 					</div>
 					
 					{/* AUTOCOMPLETE LIST */}
