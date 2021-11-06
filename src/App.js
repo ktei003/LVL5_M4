@@ -33,7 +33,7 @@ function App() {
 
 	const getAutocomplete = (text) => {
 		if (text) {
-			axios.get('http://localhost:4000/autocomplete', { params: { prefix: text } })
+			axios.get('http://localhost:4000/autocomplete', { params: { prefix: text, collection: currentCollection } })
 				.then(res => setAutocomplete(res.data.completions))
 				.catch(() => console.log("There was a catch error"));
 		} else {
@@ -42,6 +42,8 @@ function App() {
 	}
 
 	// SEARCH HANDLERS
+	const cleanText = (text) => text.replace(/[^a-zA-Z0-9 ]/g, "");
+
 	const handleEnter = (e) => {
 		if (e.charCode === 13) handleSearch();
 		setAutocomplete([])
