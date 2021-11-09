@@ -108,6 +108,9 @@ function App() {
 							}}
 							onKeyPress={handleEnter}
 						/>
+						<div className="goButton" onClick={handleSearch}>
+							Search
+						</div>
 						<select name="collection" id="collection" value={currentCollection} onChange={(e) => setCurrentCollection(e.target.value)}>
 							{
 								collectionList.map((item) => (
