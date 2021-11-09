@@ -11,7 +11,7 @@ function App() {
 	const localURL = "http://localhost:4000/"
 	const remoteURL = "https://turners-search-backend.herokuapp.com/"
 	// const endpoint = process.env.NODE_ENV === "development" ? localURL : remoteURL
-	const endpoint = localURL
+	const endpoint = remoteURL
 
 	// REACT STATES
 	const [autocomplete, setAutocomplete] = useState([]);
