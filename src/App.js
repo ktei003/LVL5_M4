@@ -144,7 +144,15 @@ function App() {
 						searchResults.map((item) => (
 							<div className='searchResultItem' onClick={() => openInNewTab(item.metadata.source.url)}>
 								<h3>{item.title[0].length > 150 ? item.title[0].slice(0, 147) + "..." : item.title}</h3>
-								<div className='searchResultItem__text'><p>{getLimitedText(item.text[0], 1000)}</p><br /><p className="searchResultItem__link">Source: {item.metadata.source.url}</p></div>
+								<div className='searchResultItem__text'>
+									<p>
+										{getLimitedText(item.text[0], 1000)}
+									</p>
+									<br />
+									<p className="searchResultItem__link">
+										Source: {item.metadata.source.url}
+									</p>
+								</div>
 								<div className='pillBoxSuper'>
 									<div className='pillBox'>
 										{
@@ -152,7 +160,9 @@ function App() {
 												<div className='pill' style={{
 													backgroundColor: `rgba(50, 50, 50, ${keyword.relevance})`,
 													color: keyword.relevance > 0.55 ? "white" : "black"
-												}}>{keyword.text}</div>
+												}}>
+													{keyword.text}
+												</div>
 											))
 										}
 									</div>
