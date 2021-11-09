@@ -11,7 +11,7 @@ function App() {
 	const localURL = "http://localhost:4000/"
 	const remoteURL = "https://turners-search-backend.herokuapp.com/"
 	// const endpoint = process.env.NODE_ENV === "development" ? localURL : remoteURL
-	const endpoint = remoteURL
+	const endpoint = localURL
 
 	// REACT STATES
 	const [autocomplete, setAutocomplete] = useState([]);
@@ -65,6 +65,7 @@ function App() {
 			.then(res => {
 				setSearchResults(res.data.results)
 				console.log(res.data.results)
+				console.dir(res.data)
 				setAutocomplete([])
 			})
 			.catch(() => console.log("There was a catch error"))
@@ -143,6 +144,20 @@ function App() {
 							<div className='searchResultItem' onClick={() => openInNewTab(item.metadata.source.url)}>
 								<h3>{item.title[0].length > 150 ? item.title[0].slice(0, 147) + "..." : item.title}</h3>
 								<div className='searchResultItem__text'><p>{getLimitedText(item.text[0], 1000)}</p><br /><p className="searchResultItem__link">Source: {item.metadata.source.url}</p></div>
+								<div>
+									{
+										item.enriched_text[0].entities?.slice(0, 3).map((keyword) => (
+											<div>{keyword.text}</div>
+										))
+									}
+								</div>
+								<div>
+									{
+										item.enriched_text[0].keywords?.slice(0, 3).map((keyword) => (
+											<div>{keyword.text}</div>
+										))
+									}
+								</div>
 							</div>
 						))
 					}
