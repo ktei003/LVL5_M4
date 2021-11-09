@@ -10,7 +10,7 @@ const testArray = [
 ]
 
 testArray.forEach(text => {
-	test('Correctly cleans a string', () => {
+	test(`Cleaned ${text}`, () => {
 		expect(cleanText(text)).toBe("hello world")
 	})
 })
