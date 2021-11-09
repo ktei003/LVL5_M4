@@ -191,3 +191,29 @@
 #collection:hover {
   border: 1px solid #ccc;
 }
+.pillBoxSuper {
+  margin-top: 0.8em;
+}
+
+.pillBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  margin: 0.6em 0;
+}
+
+.pill {
+  border-radius: 5em;
+  display: inline-block;
+  white-space: nowrap;
+  background-color: black;
+  color: white;
+  font-weight: 600;
+  padding: 0.3em 0.8em;
+  font-size: 0.8rem;
+  width: max-content;
+  font-style: italic;
+  text-transform: lowercase;
+}

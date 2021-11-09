@@ -20,7 +20,7 @@ function App() {
 	const [searchResults, setSearchResults] = useState([]);
 	const [collectionList, setCollectionList] = useState([]);
 	const [currentCollection, setCurrentCollection] = useState();
-	
+
 	// COLLECTION SETUP
 	const getCollections = () => {
 		axios.get(endpoint + 'collections')
@@ -58,17 +58,17 @@ function App() {
 	const handleSearch = () => {
 		getSearch(searchTerm)
 	}
-	
+
 	const getSearch = (search) => {
 		if (search) {
 			axios.get(endpoint + 'search', { params: { search: cleanText(search), collection: currentCollection } })
-			.then(res => {
-				setSearchResults(res.data.results)
-				console.log(res.data.results)
-				console.dir(res.data)
-				setAutocomplete([])
-			})
-			.catch(() => console.log("There was a catch error"))
+				.then(res => {
+					setSearchResults(res.data.results)
+					console.log(res.data.results)
+					console.dir(res.data)
+					setAutocomplete([])
+				})
+				.catch(() => console.log("There was a catch error"))
 		} else {
 			console.log("text returned false")
 			setSearchResults({})
@@ -144,19 +144,25 @@ function App() {
 							<div className='searchResultItem' onClick={() => openInNewTab(item.metadata.source.url)}>
 								<h3>{item.title[0].length > 150 ? item.title[0].slice(0, 147) + "..." : item.title}</h3>
 								<div className='searchResultItem__text'><p>{getLimitedText(item.text[0], 1000)}</p><br /><p className="searchResultItem__link">Source: {item.metadata.source.url}</p></div>
-								<div>
-									{
-										item.enriched_text[0].entities?.slice(0, 3).map((keyword) => (
-											<div>{keyword.text}</div>
-										))
-									}
-								</div>
-								<div>
-									{
-										item.enriched_text[0].keywords?.slice(0, 3).map((keyword) => (
-											<div>{keyword.text}</div>
-										))
-									}
+								<div className='pillBoxSuper'>
+									<div className='pillBox'>
+										{
+											item.enriched_text[0].keywords?.slice(0, 8).map((keyword) => (
+												<div className='pill' style={{
+													backgroundColor: `rgba(50, 50, 50, ${keyword.relevance})`,
+													color: keyword.relevance > 0.55 ? "white" : "black"
+												}}>{keyword.text}</div>
+											))
+										}
+									</div>
+
+									<div className='pillBox'>
+										{
+											item.enriched_text[0].entities?.slice(0, 3).map((keyword) => (
+												<div className='pill'>{keyword.text}</div>
+											))
+										}
+									</div>
 								</div>
 							</div>
 						))
