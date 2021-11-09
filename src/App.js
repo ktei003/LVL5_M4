@@ -64,8 +64,6 @@ function App() {
 			axios.get(endpoint + 'search', { params: { search: cleanText(search), collection: currentCollection } })
 				.then(res => {
 					setSearchResults(res.data.results)
-					console.log(res.data.results)
-					console.dir(res.data)
 					setAutocomplete([])
 				})
 				.catch(() => console.log("There was a catch error"))
