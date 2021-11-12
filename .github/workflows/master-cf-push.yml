@@ -18,7 +18,7 @@ defaults:
     working-directory: ./
 
 jobs:
-  run_tests:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,10 +26,14 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 14
-      - run: npm ci
+
+      - name: Clean install of Node for testing
+        run: npm ci
+
+      - name: Run Jest tests
       - run: npm test
 
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
