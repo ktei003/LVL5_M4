@@ -1,0 +1,6 @@
+applications:
+  - name: turners
+    routes:
+      - route: turners.au-syd.mybluemix.net
+    memory: 512M
+    buildpack: nodejs_buildpack
