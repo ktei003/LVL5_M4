@@ -27,10 +27,8 @@ jobs:
         with:
           node-version: 14
 
-      - name: Clean install of Node for testing
-        run: npm ci
-
       - name: Run Jest tests
+      - run: npm ci
       - run: npm test
 
   deploy:
