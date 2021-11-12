@@ -11,6 +11,6 @@ const testArray = [
 
 testArray.forEach(text => {
 	test(`Cleaned ${text}`, () => {
-		expect(cleanText(text)).toBe("hello x world")
+		expect(cleanText(text)).toBe("hello world")
 	})
 })
