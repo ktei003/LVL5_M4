@@ -1,0 +1,19 @@
+name: Deploy development branch to beta site
+
+on:
+  push:
+    branches:
+      - development
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "turners-search"
+          heroku_email: "caedanlavender@gmail.com"
+          buildpack: "https://github.com/heroku/heroku-buildpack-nodejs.git"
+          procfile: "web: npm start"
