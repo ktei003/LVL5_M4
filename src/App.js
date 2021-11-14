@@ -7,7 +7,6 @@ import cleanText from './functions/cleanText';
 
 
 function App() {
-	console.log(process.env)
 	//ENVIRONMENT SETUP (DISTINGUISHES BETWEEN DEVELOPMENT AND PRODUCTION)
 	const localURL = "http://localhost:4000/"
 	const remoteURL = "https://turners-search-backend.herokuapp.com/"
@@ -88,7 +87,7 @@ function App() {
 		<div className="App">
 			<div className="upper">
 				{/* TITLE */}
-				<div className='title'>Search Turners {process.env.NODE_ENV === "development" && "Beta"}</div>
+				<div className='title'>Search Turners</div>
 
 				{/* SEARCH BOX */}
 				<div className='searchContainer'>
