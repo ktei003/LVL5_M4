@@ -87,7 +87,7 @@ function App() {
 		<div className="App">
 			<div className="upper">
 				{/* TITLE */}
-				<div className='title'>Search Turners Beta</div>
+				<div className='title'>Search Turners {process.env.NODE_ENV === "development" && "Beta"}</div>
 
 				{/* SEARCH BOX */}
 				<div className='searchContainer'>
